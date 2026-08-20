@@ -13,8 +13,4 @@ Rails.application.configure do
 
   config.action_controller.perform_caching = true
   config.hosts.clear
-
-  # SQLite on a persistent disk is an intentional, documented choice for this
-  # small single-instance app (see README) — silence the production warning.
-  config.active_record.sqlite3_production_warning = false
 end

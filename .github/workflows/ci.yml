@@ -24,3 +24,7 @@ jobs:
           RAILS_ENV: test
       - name: Check that the app boots
         run: bin/rails runner "puts 'Rails app loaded OK'"
+      - name: Audit gems for known vulnerabilities
+        run: |
+          gem install bundler-audit --no-document
+          bundle-audit check --update

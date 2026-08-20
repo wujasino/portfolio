@@ -1,0 +1,36 @@
+<div class="admin-page-head">
+  <h1>Projekty</h1>
+  <%= link_to "Nowy projekt", new_admin_project_path, class: "btn btn-primary" %>
+</div>
+
+<% if @projects.any? %>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Pozycja</th>
+        <th>Nazwa</th>
+        <th>Tagline</th>
+        <th>Stack</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each do |project| %>
+        <tr>
+          <td><%= project.position %></td>
+          <td><%= project.name %></td>
+          <td><%= project.tagline %></td>
+          <td><%= project.stack_list %></td>
+          <td class="row-actions">
+            <%= link_to "Edytuj", edit_admin_project_path(project), class: "btn btn-ghost btn-sm" %>
+            <%= button_to "Usuń", admin_project_path(project), method: :delete,
+                  class: "btn btn-danger btn-sm",
+                  form: { data: { turbo_confirm: "Usunąć projekt „#{project.name}”?" } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="admin-empty">Brak projektów. <%= link_to "Dodaj pierwszy", new_admin_project_path %>.</p>
+<% end %>

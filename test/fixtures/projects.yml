@@ -1,0 +1,17 @@
+presora:
+  name: Presora
+  tagline: SaaS mierzący widoczność marek w odpowiedziach LLM
+  description: Opis testowego projektu Presora.
+  stack: '["TypeScript", "React"]'
+  url: https://presora.app
+  repo: https://github.com/wujasino/presora
+  position: 0
+
+automations:
+  name: Automatyzacje procesów B2B
+  tagline: Freelance — automatyzacja workflow
+  description: Opis testowego projektu automatyzacji.
+  stack: '["n8n", "Make"]'
+  url:
+  repo:
+  position: 1

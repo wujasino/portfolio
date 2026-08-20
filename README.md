@@ -18,21 +18,36 @@ Aplikacja wystartuje na `http://localhost:3000`.
 
 ## Struktura
 
-- `app/models/project.rb`, `app/models/skill.rb` — modele Active Record
-- `db/seeds.rb` — dane początkowe o projektach i stacku (edytuj tutaj)
+- `app/models/project.rb`, `app/models/skill.rb` — modele Active Record z walidacjami
+- `db/seeds.rb` — dane początkowe o projektach i stacku
 - `db/migrate/` — migracje tworzące tabele `projects` i `skills`
-- `app/controllers/portfolio_controller.rb` — pobiera dane z bazy dla widoku
-- `app/views/portfolio/index.html.erb` — treść strony
-- `app/assets/stylesheets/application.css` — style (dark theme, bez frameworka CSS)
+- `app/controllers/portfolio_controller.rb` — pobiera dane z bazy dla widoku publicznego
+- `app/controllers/admin/` — panel administracyjny (CRUD projektów i umiejętności)
+- `app/views/portfolio/index.html.erb` — treść strony publicznej
+- `app/assets/stylesheets/application.css` — style strony publicznej (dark theme)
+- `app/assets/stylesheets/admin.css` — style panelu admina
+- `test/` — testy modeli i kontrolerów (Minitest)
 
 ## Baza danych
 
 Aplikacja używa SQLite (gem `sqlite3`) — plik bazy trzymany jest w `storage/`
 i nie jest wersjonowany. Treść strony (projekty, umiejętności) żyje w
-tabelach `projects` i `skills`, zasilanych przez `db/seeds.rb`. Aby
-zaktualizować treść: edytuj `db/seeds.rb` i uruchom `bin/rails db:seed`
-(seed czyści i wstawia dane na nowo, więc jest bezpieczny do wielokrotnego
-uruchamiania).
+tabelach `projects` i `skills`, walidowanych na poziomie modeli (obecność
+wymaganych pól, poprawność adresów URL, unikalność nazw umiejętności w
+obrębie kategorii). Dane startowe pochodzą z `db/seeds.rb` — po pierwszym
+uruchomieniu treścią zarządza się przez panel admina.
+
+## Panel admina
+
+Pod `/admin` dostępny jest prosty CRUD do zarządzania projektami i
+umiejętnościami bez dotykania kodu — formularze z walidacją, listy,
+edycja i usuwanie (z potwierdzeniem przez Turbo).
+
+Panel jest chroniony HTTP Basic Auth. Domyślnie (development/test) loginem
+i hasłem jest `admin` / `admin`. W produkcji **koniecznie** ustaw zmienne
+środowiskowe `ADMIN_USER` i `ADMIN_PASSWORD` — jeśli `ADMIN_PASSWORD` nie
+jest ustawione w `production`, aplikacja wygeneruje losowe hasło przy
+starcie (blokując dostęp), zamiast wystawić domyślne dane logowania.
 
 ## Deploy
 
@@ -44,6 +59,14 @@ Przykład (Render / Railway): ustaw komendę startową `bin/rails server -p $POR
 oraz upewnij się, że katalog `storage/` jest na trwałym dysku (persistent disk),
 inaczej baza SQLite zniknie przy każdym redeployu.
 
+## Testy
+
+```bash
+bin/rails db:prepare RAILS_ENV=test
+bin/rails test
+```
+
 ## CI
 
-`.github/workflows/ci.yml` weryfikuje przy każdym pushu, że aplikacja się bootuje.
+`.github/workflows/ci.yml` przy każdym pushu przygotowuje bazę testową,
+uruchamia pełny zestaw testów i weryfikuje, że aplikacja się bootuje.

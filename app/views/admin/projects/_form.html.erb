@@ -1,0 +1,53 @@
+<%= form_with model: [:admin, project], class: "admin-form" do |f| %>
+  <% if project.errors.any? %>
+    <div class="admin-error-summary">
+      <p><%= pluralize(project.errors.count, "błąd") %> uniemożliwia zapisanie projektu:</p>
+      <ul>
+        <% project.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="admin-field">
+    <%= f.label :name, "Nazwa" %>
+    <%= f.text_field :name, required: true %>
+  </div>
+
+  <div class="admin-field">
+    <%= f.label :tagline, "Tagline" %>
+    <%= f.text_field :tagline, required: true %>
+  </div>
+
+  <div class="admin-field">
+    <%= f.label :description, "Opis" %>
+    <%= f.text_area :description, rows: 5, required: true %>
+  </div>
+
+  <div class="admin-field">
+    <%= f.label :stack_list, "Stack technologiczny" %>
+    <%= f.text_field :stack_list, value: project.stack_list %>
+    <span class="hint">Lista technologii oddzielona przecinkami, np. „React, Node.js, PostgreSQL”.</span>
+  </div>
+
+  <div class="admin-field">
+    <%= f.label :url, "Link do wdrożenia (opcjonalnie)" %>
+    <%= f.url_field :url %>
+  </div>
+
+  <div class="admin-field">
+    <%= f.label :repo, "Link do repozytorium (opcjonalnie)" %>
+    <%= f.url_field :repo %>
+  </div>
+
+  <div class="admin-field">
+    <%= f.label :position, "Pozycja (kolejność wyświetlania)" %>
+    <%= f.number_field :position %>
+  </div>
+
+  <div class="admin-form-actions">
+    <%= f.submit "Zapisz", class: "btn btn-primary" %>
+    <%= link_to "Anuluj", admin_projects_path, class: "btn btn-ghost" %>
+  </div>
+<% end %>

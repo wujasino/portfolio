@@ -1,0 +1,36 @@
+<div class="admin-page-head">
+  <h1>Umiejętności</h1>
+  <%= link_to "Nowa umiejętność", new_admin_skill_path, class: "btn btn-primary" %>
+</div>
+
+<% if @skills.any? %>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Kategoria</th>
+        <th>Nazwa</th>
+        <th>Pozycja</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @skills.each do |category, items| %>
+        <% items.each do |skill| %>
+          <tr>
+            <td><%= category %></td>
+            <td><%= skill.name %></td>
+            <td><%= skill.position %></td>
+            <td class="row-actions">
+              <%= link_to "Edytuj", edit_admin_skill_path(skill), class: "btn btn-ghost btn-sm" %>
+              <%= button_to "Usuń", admin_skill_path(skill), method: :delete,
+                    class: "btn btn-danger btn-sm",
+                    form: { data: { turbo_confirm: "Usunąć umiejętność „#{skill.name}”?" } } %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="admin-empty">Brak umiejętności. <%= link_to "Dodaj pierwszą", new_admin_skill_path %>.</p>
+<% end %>

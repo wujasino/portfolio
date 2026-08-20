@@ -1,0 +1,14 @@
+<div class="admin-page-head">
+  <h1>Panel</h1>
+</div>
+
+<div class="admin-dashboard-grid">
+  <div class="admin-stat">
+    <strong><%= @projects_count %></strong>
+    <span><%= link_to "Projekty", admin_projects_path %></span>
+  </div>
+  <div class="admin-stat">
+    <strong><%= @skills_count %></strong>
+    <span><%= link_to "Umiejętności", admin_skills_path %></span>
+  </div>
+</div>

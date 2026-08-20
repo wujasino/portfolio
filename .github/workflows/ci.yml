@@ -16,5 +16,11 @@ jobs:
           bundler-cache: true
       - name: Prepare database
         run: bin/rails db:prepare
+        env:
+          RAILS_ENV: test
+      - name: Run test suite
+        run: bin/rails test
+        env:
+          RAILS_ENV: test
       - name: Check that the app boots
         run: bin/rails runner "puts 'Rails app loaded OK'"

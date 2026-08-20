@@ -1,0 +1,14 @@
+typescript:
+  category: Języki i frontend
+  name: TypeScript
+  position: 0
+
+react:
+  category: Języki i frontend
+  name: React 18
+  position: 1
+
+postgresql:
+  category: Backend i dane
+  name: PostgreSQL
+  position: 0

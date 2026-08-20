@@ -1,0 +1,10 @@
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/.bundle
+/vendor/bundle
+.byebug_history
+/public/assets
+.DS_Store
+*.swp

@@ -1,0 +1,85 @@
+<header class="hero">
+  <nav class="nav">
+    <span class="nav-brand">PR</span>
+    <div class="nav-links">
+      <a href="#projekty">Projekty</a>
+      <a href="#stack">Stack</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+  </nav>
+
+  <div class="hero-content">
+    <p class="eyebrow">Full-Stack &amp; AI Engineer</p>
+    <h1>Patryk Rybacki</h1>
+    <p class="hero-lede">
+      Budowałem produkcyjne SaaS-y od zera: orkiestrację sześciu modeli LLM, płatności,
+      panel admina i 45 testów E2E z pełnym CI. Programowania nauczyłem się sam —
+      dowodem jest kod, nie dyplom.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#projekty">Zobacz projekty</a>
+      <a class="btn btn-ghost" href="https://github.com/wujasino" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="projekty" class="section">
+    <h2 class="section-title">Projekty</h2>
+    <div class="project-grid">
+      <% @projects.each do |project| %>
+        <article class="project-card">
+          <div class="project-card-head">
+            <h3><%= project[:name] %></h3>
+            <div class="project-links">
+              <% if project[:url] %>
+                <a href="<%= project[:url] %>" target="_blank" rel="noopener" aria-label="Otwórz <%= project[:name] %>">Live ↗</a>
+              <% end %>
+              <% if project[:repo] %>
+                <a href="<%= project[:repo] %>" target="_blank" rel="noopener" aria-label="Repozytorium <%= project[:name] %>">Kod ↗</a>
+              <% end %>
+            </div>
+          </div>
+          <p class="project-tagline"><%= project[:tagline] %></p>
+          <p class="project-desc"><%= project[:description] %></p>
+          <ul class="tag-list">
+            <% project[:stack].each do |tech| %>
+              <li><%= tech %></li>
+            <% end %>
+          </ul>
+        </article>
+      <% end %>
+    </div>
+  </section>
+
+  <section id="stack" class="section section-alt">
+    <h2 class="section-title">Stack techniczny</h2>
+    <div class="skills-grid">
+      <% @skills.each do |category, items| %>
+        <div class="skills-group">
+          <h3><%= category %></h3>
+          <ul class="tag-list">
+            <% items.each do |item| %>
+              <li><%= item %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <section id="kontakt" class="section">
+    <h2 class="section-title">Kontakt</h2>
+    <p class="contact-lede">Otwarty na role QA Automation Engineer oraz AI / LLM Engineer.</p>
+    <div class="contact-links">
+      <a href="mailto:patrykrybacki82@gmail.com">patrykrybacki82@gmail.com</a>
+      <a href="https://github.com/wujasino" target="_blank" rel="noopener">github.com/wujasino</a>
+      <a href="https://linkedin.com/in/patryk-rybacki-503599355" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://presora.app" target="_blank" rel="noopener">presora.app</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>&copy; <%= Time.current.year %> Patryk Rybacki. Zbudowane w Ruby on Rails.</p>
+</footer>

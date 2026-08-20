@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: portfolio
+    runtime: ruby
+    plan: free
+    region: frankfurt
+    buildCommand: "bundle install && bin/rails assets:precompile"
+    preDeployCommand: "bin/rails db:prepare && bin/rails db:seed"
+    startCommand: "bin/rails server -p $PORT -e $RAILS_ENV"
+    healthCheckPath: /up
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: ADMIN_USER
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+    disk:
+      name: sqlite-storage
+      mountPath: /opt/render/project/src/storage
+      sizeGB: 1

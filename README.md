@@ -51,13 +51,33 @@ starcie (blokując dostęp), zamiast wystawić domyślne dane logowania.
 
 ## Deploy
 
-Aplikacja jest gotowa pod dowolny hosting Rails (Render, Fly.io, Railway, Heroku).
-Zawiera `Procfile` (z fazą `release: bin/rails db:prepare db:seed`) i wymusza
-SSL w produkcji (`config/environments/production.rb`).
+To pełnoprawna aplikacja Rails z bazą SQLite i panelem admina wymagającym
+trwałego serwera procesu — **nie da się jej hostować na Netlify** (to
+platforma pod statyczne strony / funkcje serverless, bez długo działającego
+procesu ani dysku). Zamiast tego aplikacja jest gotowa pod dowolny hosting
+Rails: Render, Fly.io, Railway, Heroku. Wymusza SSL w produkcji
+(`config/environments/production.rb`).
 
-Przykład (Render / Railway): ustaw komendę startową `bin/rails server -p $PORT`
-oraz upewnij się, że katalog `storage/` jest na trwałym dysku (persistent disk),
-inaczej baza SQLite zniknie przy każdym redeployu.
+### Render (zalecane, `render.yaml`)
+
+Repo zawiera gotowy `render.yaml` — po podpięciu repozytorium w Render
+(„New → Blueprint”) usługa skonfiguruje się automatycznie:
+
+- `buildCommand` instaluje gemy i kompiluje assety,
+- `preDeployCommand` uruchamia `db:prepare` i `db:seed` przed każdym deployem,
+- dysk trwały (`disk`) montowany w `storage/` — baza SQLite przetrwa redeploy,
+- `SECRET_KEY_BASE` generowany automatycznie przez Render,
+- `ADMIN_USER` / `ADMIN_PASSWORD` — ustaw ręcznie w panelu Render (Environment)
+  przed pierwszym deployem, inaczej panel `/admin` będzie niedostępny (patrz
+  sekcja „Panel admina” wyżej).
+
+### Inne platformy (Railway, Fly.io, Heroku)
+
+Zawiera `Procfile` (z fazą `release: bin/rails db:prepare db:seed`).
+Ustaw komendę startową `bin/rails server -p $PORT`, zmienne `SECRET_KEY_BASE`,
+`ADMIN_USER`, `ADMIN_PASSWORD`, oraz upewnij się, że katalog `storage/` jest
+na trwałym dysku (persistent volume) — inaczej baza SQLite zniknie przy
+każdym redeployu.
 
 ## Testy
 

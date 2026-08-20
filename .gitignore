@@ -2,6 +2,8 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/storage/*.sqlite3
+/storage/*.sqlite3-*
 /.bundle
 /vendor/bundle
 .byebug_history

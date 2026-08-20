@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails"
+require "active_record/railtie"
 require "action_controller/railtie"
 require "action_view/railtie"
 require "sprockets/railtie" if defined?(Sprockets)
@@ -13,8 +14,6 @@ module PortfolioRails
 
     config.autoload_lib(ignore: %w[assets tasks])
 
-    # Static portfolio site — no database, no Active Record.
-    config.generators.skip_active_record = true
     config.api_only = false
   end
 end
